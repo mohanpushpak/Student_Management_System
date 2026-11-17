@@ -1,4 +1,4 @@
-# 🎓 Student Management System
+# 🎓 Student Management System --- FastAPI
 
 A web-based Student Management System built with **Python FastAPI and SQLite** to simplify student registration and academic record management.
 

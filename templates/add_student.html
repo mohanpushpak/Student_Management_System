@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Student</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+
+            background:
+                radial-gradient(circle at 15% 20%, #334caa, transparent 35%),
+                radial-gradient(circle at 85% 80%, #7c3aed, transparent 35%),
+                linear-gradient(135deg, #080d27, #172554, #111827);
+        }
+
+        /* Main Form Card */
+
+        .add-card {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            padding: 35px;
+
+            overflow: hidden;
+
+            background: rgba(255,255,255,0.09);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 25px;
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.4),
+                inset 0 1px 1px rgba(255,255,255,0.3);
+
+            color: white;
+
+            transition: 0.4s ease;
+        }
+
+        /* Glossy Shine */
+
+        .add-card::before {
+            content: "";
+
+            position: absolute;
+            top: -100%;
+            left: -50%;
+
+            width: 200%;
+            height: 200%;
+
+            background: linear-gradient(
+                120deg,
+                transparent 35%,
+                rgba(255,255,255,0.10) 50%,
+                transparent 65%
+            );
+
+            transform: rotate(25deg);
+            pointer-events: none;
+        }
+
+        .add-card:hover {
+            box-shadow:
+                0 35px 75px rgba(0,0,0,0.5),
+                0 0 25px rgba(96,165,250,0.2),
+                inset 0 1px 2px rgba(255,255,255,0.4);
+        }
+
+        /* Heading */
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #93c5fd,
+                #c4b5fd
+            );
+
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #cbd5e1;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        /* Form Fields */
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+
+            color: #e0e7ff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+
+            outline: none;
+
+            color: white;
+            font-size: 14px;
+
+            background: rgba(255,255,255,0.08);
+
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+
+            box-shadow:
+                inset 0 1px 5px rgba(255,255,255,0.05);
+
+            transition: 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-group select option {
+            background: #172554;
+            color: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #60a5fa;
+
+            box-shadow:
+                0 0 12px rgba(96,165,250,0.3);
+
+            background: rgba(255,255,255,0.12);
+        }
+
+        /* Image Preview */
+
+        .image-preview {
+            display: none;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .image-preview img {
+            width: 100px;
+            height: 100px;
+
+            object-fit: cover;
+            border-radius: 50%;
+
+            border: 3px solid rgba(255,255,255,0.7);
+
+            box-shadow:
+                0 0 20px rgba(96,165,250,0.4);
+        }
+
+        /* Buttons */
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .add-btn,
+        .back-btn {
+            flex: 1;
+            min-width: 130px;
+
+            padding: 12px 15px;
+
+            border-radius: 30px;
+
+            text-align: center;
+            text-decoration: none;
+
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+
+            border: 1px solid rgba(255,255,255,0.3);
+
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .add-btn {
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #7c3aed
+            );
+
+            box-shadow:
+                0 8px 20px rgba(37,99,235,0.3),
+                inset 0 1px 2px rgba(255,255,255,0.4);
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .add-btn:hover,
+        .back-btn:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 12px 30px rgba(96,165,250,0.4);
+        }
+
+        /* Responsive */
+
+        @media (max-width: 500px) {
+
+            .add-card {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="add-card">
+
+        <h1>Add New Student</h1>
+
+        <p class="subtitle">
+            Enter student information below
+        </p>
+
+
+        <!-- Add Student Form -->
+
+        <form action="/students/add" method="POST">
+
+
+            <div class="form-group">
+
+                <label for="name">Student Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    minlength="3"
+                    maxlength="20"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="age">Age</label>
+
+                <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    placeholder="Enter your age"
+                    min="18"
+                    max="24"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="gender">Gender</label>
+
+                <select id="gender" name="gender" required>
+
+                    <option value="">Select Gender</option>
+
+                    <option value="Male">Male</option>
+
+                    <option value="Female">Female</option>
+
+                    <option value="Other">Other</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="marks">Marks</label>
+
+                <input
+                    type="number"
+                    id="marks"
+                    name="marks"
+                    placeholder="Enter marks"
+                    min="0"
+                    max="100"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="course">Course</label>
+
+                <select id="course" name="course" required>
+
+                    <option value="">Select Course</option>
+
+                    <option value="python">Python</option>
+
+                    <option value="java">Java</option>
+
+                    <option value="mern">MERN</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">Student Image URL</label>
+
+                <input
+                    type="url"
+                    id="image"
+                    name="image"
+                    placeholder="Enter image URL"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Image Preview -->
+
+            <div class="image-preview" id="imagePreview">
+
+                <img src="" id="previewImg" alt="Student Preview">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="status">Attendance</label>
+
+                <select name="status" id="status" required>
+
+                    <option value="">Select Attendance</option>
+
+                    <option value="1">Present</option>
+
+                    <option value="0">Absent</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Form Buttons -->
+
+            <div class="form-actions">
+
+                <button type="submit" class="add-btn">
+                    + Add Student
+                </button>
+
+                <a href="/" class="back-btn">
+                    ← Dashboard
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- Image Preview JavaScript -->
+    <script>
+        const imageInput = document.getElementById("image");
+        const preview = document.getElementById("imagePreview");
+        const previewImg = document.getElementById("previewImg");
+        imageInput.addEventListener("input", function () {
+            if (this.value.trim() !== "") {
+                previewImg.src = this.value;
+                preview.style.display = "block";
+            } else {
+                preview.style.display = "none";
+            }
+        });
+        previewImg.addEventListener("error", function () {
+            preview.style.display = "none";
+        });
+    </script>
+</body>
+</html>
